@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using APIMiniProject.Models;
+using Microsoft.AspNetCore.Mvc;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
@@ -8,6 +9,13 @@ namespace APIMiniProject.Controllers
     [ApiController]
     public class PersonController : ControllerBase
     {
+        private ILogger<PersonController> _logger;
+
+        public PersonController(ILogger<PersonController> logger)
+        {
+            _logger = logger;
+        }
+
         // GET: api/<PersonController>
         [HttpGet]
         public IEnumerable<string> Get()
@@ -24,8 +32,9 @@ namespace APIMiniProject.Controllers
 
         // POST api/<PersonController>
         [HttpPost]
-        public void Post([FromBody] string value)
+        public void Post([FromBody] PersonModel person)
         {
+            _logger.LogInformation($"Hi {person.FirstName} {person.LastName}");
         }
 
         // PUT api/<PersonController>/5
