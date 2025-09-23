@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using APIMiniProject.Models;
+using Microsoft.AspNetCore.Mvc;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
@@ -8,6 +9,13 @@ namespace APIMiniProject.Controllers
     [ApiController]
     public class AddressController : ControllerBase
     {
+        private ILogger<AddressController> _logger;
+
+        public AddressController(ILogger<AddressController> logger)
+        {
+            _logger = logger;
+        }
+
         // GET: api/<AddressController>
         [HttpGet]
         public IEnumerable<string> Get()
@@ -24,8 +32,9 @@ namespace APIMiniProject.Controllers
 
         // POST api/<AddressController>
         [HttpPost]
-        public void Post([FromBody] string value)
+        public void Post([FromBody] AddressModel address)
         {
+            _logger.LogInformation($"{address.StreetAddress} {address.City}, {address.State}. {address.ZipCode}");
         }
 
         // PUT api/<AddressController>/5
